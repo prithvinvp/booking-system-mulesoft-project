@@ -1,0 +1,15 @@
+http:
+  getListener:
+    host: "localhost"
+    port: "7080"
+    path: "/hotels"
+    
+  postListener:
+    path: "/booking/hotels"
+    
+request:
+  getListener:
+    host: "localhost"
+    port: "9081"
+    path: "/hotels"
+    

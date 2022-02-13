@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="getHotelDetails" doc:id="720c51dc-24d4-4395-890d-60f6ef17c4be" >
+		<http:listener doc:name="getHotelDetails" doc:id="2e009a81-cb0c-4a6d-ace9-d073031a9a15" config-ref="HTTP_Listener_config" path="${http.getListener.path}"/>
+		<logger level="INFO" doc:name="connectionEstablished" doc:id="d8f84012-6193-4cf1-bc22-7e7dcea97bcd" message="connection established"/>
+		<flow-ref doc:name="Flow Reference" doc:id="521c13b9-3e79-4ed4-b8a7-e349feb1f147" name="getHotelDetails-implementationFlow"/>
+	</flow>
+	<flow name="postBooking" doc:id="e89e8c9c-cd67-4228-8e6d-53ffde0d3ed0" >
+		<http:listener doc:name="bookingConfirmation" doc:id="260b995e-b7c8-444e-a963-bc469ce55c1e" config-ref="HTTP_Listener_config" path="${http.postListener.path}"/>
+		<logger level="INFO" doc:name="connectionEstablished" doc:id="67a129f5-d160-4013-933f-3e39ad272760" message="connection established" />
+		<flow-ref doc:name="Flow Reference" doc:id="2f60cbd4-3075-4f0f-95c1-4ce8f40ea9b0" name="postBooking-implementationFlow"/>
+	</flow>
+</mule>

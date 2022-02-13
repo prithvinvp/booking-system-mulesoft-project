@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="b0ec46a1-2614-47d8-b10f-07d0e82f1f9a" >
+		<http:listener-connection host="${http.getListener.host}" port="${http.getListener.port}" />
+	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="a29c8dc4-fd29-4bcd-9018-2362d47a529c" file="config/${env}-config.yaml" />
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="520e53fc-e0e1-4c00-aef2-6d0073355bdf" >
+		<http:request-connection host="${request.getListener.host}" port="${request.getListener.port}" />
+	</http:request-config>
+</mule>

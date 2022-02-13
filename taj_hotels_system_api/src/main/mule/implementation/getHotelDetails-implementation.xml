@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="getHotelDetails-implementationFlow" doc:id="6a14c298-e817-44bd-af88-8f0ae4503e7a" >
+		<set-variable value="#[attributes.queryParams.location]" doc:name="Set Variable" doc:id="d5a27959-3489-4fa3-b091-30929443ba99" variableName="location"/>
+		<logger level="INFO" doc:name="Logger" doc:id="d10d5878-1d96-4347-8142-2a07aee185bd" message="#[vars.location]"/>
+		<http:request method="POST" doc:name="Request" doc:id="d3583459-ec87-42ae-bc34-c9452c9eddc8" config-ref="HTTP_Request_configuration" path="${http.getListener.path}">
+			<http:body ><![CDATA[#['<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:hot="http://www.apisero.com/TajHotels/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <hot:getHotelDetails>
+         <location>' ++ vars.location ++ '</location>
+      </hot:getHotelDetails>
+   </soapenv:Body>
+</soapenv:Envelope>']]]></http:body>
+		</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="82cba4e5-80f2-44c7-811f-b7e1be04eac3" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

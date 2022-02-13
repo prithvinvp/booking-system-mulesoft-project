@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="postBooking-implementationFlow" doc:id="5da1cba2-461c-412d-9c00-896480e40bab" >
+		<set-variable value="#[attributes.queryParams.location]" doc:name="location" doc:id="6bcac383-c9aa-4a1e-a02d-b109f05d789c" variableName="location"/>
+		<set-variable value="#[attributes.queryParams.roomType]" doc:name="room type" doc:id="3a934b41-7132-4019-b5f5-2806638b5aac" variableName="roomType"/>
+		<http:request method="POST" doc:name="Request" doc:id="cc1e240c-a67e-4de5-86b8-0c6c50d27544" config-ref="HTTP_Request_configuration" path="${http.getListener.path}">
+			<http:body ><![CDATA[#['<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:hot="http://www.apisero.com/TajHotels/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <hot:postBooking>
+         <location>' ++ vars.location ++ '</location>
+         <roomType>' ++ vars.roomType ++ '</roomType>
+      </hot:postBooking>
+   </soapenv:Body>
+</soapenv:Envelope>']]]></http:body>
+		</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="39145fbc-6ef8-4ddd-82be-221868bc7ea3" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
