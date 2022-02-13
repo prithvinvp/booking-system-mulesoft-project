@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="getHotelDetails-implementationFlow" doc:id="8d0ffb08-9725-4587-8bdf-d0c979a348c4" >
+		<logger level="INFO" doc:name="Logger" doc:id="77a316ba-3173-4d55-87c1-efeaa29f1118" message="#[payload.getHotelDetails.location]"/>
+		<db:select doc:name="getDetailsOnLocation" doc:id="8c30997d-aa97-41dd-a2f2-333e11405106" config-ref="Database_Config">
+			<db:sql ><![CDATA[SELECT * FROM TAJHOTEL WHERE LOCATION = :location;]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	'location': payload.getHotelDetails.location
+}]]]></db:input-parameters>
+		</db:select>
+		<logger level="INFO" doc:name="afterSelect" doc:id="f952e51f-2fa2-408d-bd81-947b8d6c1c75" message="#[payload]"/>
+		<ee:transform doc:name="Transform Message" doc:id="f6380b05-8f33-403d-ad11-47c9b419a634" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+{
+	hotels: {
+		(payload map ( payload01 , indexOfPayload01 ) -> {
+			hotelsID: {
+				COMPANY_NAME: payload01.COMPANY_NAME,
+				ROOM_TYPE: payload01.ROOM_TYPE,
+				LOCATION: payload01.LOCATION,
+				PRICE: payload01.PRICE,
+				AVAILABLE_ROOMS: payload01.AVAILABLE_ROOMS
+			}
+		})
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="89cd748a-6b0b-4a91-b250-5ef3eb050ead" message="flow ended"/>
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="80ca1d81-512a-4880-af56-baba1f92137f" >
+				<logger level="INFO" doc:name="Logger" doc:id="d9f4f615-d1e2-41ab-8892-c77122a984e6" message="internal error occured ... please resolve and re-run the application"/>
+			</on-error-propagate>
+		</error-handler>
+	</flow>
+</mule>

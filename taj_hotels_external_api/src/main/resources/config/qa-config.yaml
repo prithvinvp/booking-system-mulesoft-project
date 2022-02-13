@@ -1,0 +1,5 @@
+http:
+  getListener:
+    host: "localhost"
+    port: "9091"
+    path: "/hotelDetails"

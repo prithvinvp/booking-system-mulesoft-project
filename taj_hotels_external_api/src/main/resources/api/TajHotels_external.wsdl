@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:hotels="http://www.apisero.com/TajHotels/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="TajHotels" targetNamespace="http://www.apisero.com/TajHotels/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.apisero.com/TajHotels/">
+      <xsd:element name="getHotelDetails">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="location" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getHotelDetailsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+          	<xsd:element name="companyName" type="xsd:string" />
+          	<xsd:element name="roomType" type="xsd:string"></xsd:element>
+          	<xsd:element name="location" type="xsd:string"></xsd:element>
+          	<xsd:element name="price" type="xsd:int"></xsd:element>
+          	<xsd:element name="availableRooms" type="xsd:int"></xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="postBooking">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="location" type="xsd:string"></xsd:element>
+      			<xsd:element name="roomType" type="xsd:string"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+      <xsd:element name="postBookingResponse">
+      	<xsd:complexType>
+      		<xsd:sequence>
+
+      			<xsd:element name="success" type="xsd:string"></xsd:element>
+      			<xsd:element name="referenceID" type="xsd:int"></xsd:element>
+      		</xsd:sequence>
+      	</xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="getHotelDetailsRequest">
+    <wsdl:part element="hotels:getHotelDetails" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="getHotelDetailsResponse">
+    <wsdl:part element="hotels:getHotelDetailsResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="postBookingRequest">
+  	<wsdl:part name="parameters" element="hotels:postBooking"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="postBookingResponse">
+  	<wsdl:part name="parameters" element="hotels:postBookingResponse"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="TajHotels">
+    <wsdl:operation name="getHotelDetails">
+      <wsdl:input message="hotels:getHotelDetailsRequest"/>
+      <wsdl:output message="hotels:getHotelDetailsResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="postBooking">
+    	<wsdl:input message="hotels:postBookingRequest"></wsdl:input>
+    	<wsdl:output message="hotels:postBookingResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TajHotelsSOAP" type="hotels:TajHotels">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getHotelDetails">
+      <soap:operation soapAction="http://mu.learn.mulesoft.com/tajHotels?wsdl"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+	
+	<wsdl:operation name="postBooking">
+      <soap:operation soapAction="http://mu.learn.mulesoft.com/tajHotels?wsdl"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TajHotels">
+    <wsdl:port binding="hotels:TajHotelsSOAP" name="TajHotelsSOAP">
+      <soap:address location="http://www.example.org/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<mule xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit-soap="http://www.mulesoft.org/schema/mule/apikit-soap" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/apikit-soap http://www.mulesoft.org/schema/mule/apikit-soap/current/mule-apikit-soap.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+    <http:listener-config name="api-httpListenerConfig">
+        <http:listener-connection host="${http.getListener.host}" port="${http.getListener.port}"/>
+    </http:listener-config>
+    <apikit-soap:config httpStatusVarName="httpStatus" name="soapkit-config" port="TajHotelsSOAP" service="TajHotels" wsdlLocation="TajHotels_external.wsdl"/>
+    <flow name="api-main">
+        <http:listener config-ref="api-httpListenerConfig" path="${http.getListener.path}">
+            <http:response statusCode="#[attributes.additionalTransportData.statusCode default 200]">
+                <http:headers><![CDATA[#[attributes.protocolHeaders default {}]]]></http:headers>
+            </http:response>
+            <http:error-response statusCode="#[attributes.additionalTransportData.statusCode default 500]">
+                <http:body><![CDATA[#[payload]]]></http:body>
+                <http:headers><![CDATA[#[attributes.protocolHeaders default {}]]]></http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit-soap:router config-ref="soapkit-config">
+            <apikit-soap:attributes><![CDATA[#[%dw 2.0
+              output application/java
+              ---
+              {
+                  headers: attributes.headers,
+                  method: attributes.method,
+                  queryString: attributes.queryString
+            }]]]></apikit-soap:attributes>
+        </apikit-soap:router>
+    </flow>
+    <flow name="getHotelDetails:\soapkit-config">
+        <logger level="INFO" doc:name="inInterface" doc:id="bab6b5df-388a-4104-be96-d9a47e7f0541" message="inInterface"/>
+		<ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+ns soap http://schemas.xmlsoap.org/soap/envelope
+---
+payload.body]]>
+                </ee:set-payload>
+            </ee:message>
+        </ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="632fe205-8cc3-4245-ab8c-293148c53aa6" message="#[payload]"/>
+		<flow-ref doc:name="Flow Reference" doc:id="3e9abde5-d4d0-429a-8d13-8136786d609b" name="getHotelDetails-implementationFlow"/>
+    </flow>
+    <flow name="postBooking:\soapkit-config">
+        <ee:transform>
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+ns soap http://schemas.xmlsoap.org/soap/envelope
+---
+payload.body]]>
+                </ee:set-payload>
+            </ee:message>
+        </ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="b66788a4-0a48-42f0-abab-bf6b195b1834" message="#[payload]"/>
+		<flow-ref doc:name="Flow Reference" doc:id="4bef5717-ed33-4adc-9648-1dba9dfa8405" name="postBooking-implementationFlow"/>
+    </flow>
+</mule>

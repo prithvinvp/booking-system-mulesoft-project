@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="f610e976-b781-4ff4-acf4-28dcd3dc1fd3" >
+		<db:my-sql-connection host="flightsdb.cevzfi8xnzbk.ap-south-1.rds.amazonaws.com" port="3306" user="admin" password="root12345" database="TAJHOTELS" />
+	</db:config>
+	<configuration-properties doc:name="Configuration properties" doc:id="7527a3ef-8ac9-4e9c-8731-d9a63c1d524c" file="config/${env}-config.yaml" />
+</mule>

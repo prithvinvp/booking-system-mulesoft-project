@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<flow name="postBooking-implementationFlow" doc:id="daa943f7-590d-44e2-830a-a21cb84c020e" >
+		<logger level="INFO" doc:name="Logger" doc:id="174afcf2-b0e9-463e-bf0d-0ae1efc38d8b" message="#[payload]"/>
+		<db:update doc:name="Update" doc:id="64461a53-6b15-4393-bad7-e0aa2cbaf5a1" config-ref="Database_Config">
+			<db:sql ><![CDATA[UPDATE TAJHOTEL
+   SET AVAILABLE_ROOMS = (AVAILABLE_ROOMS-1)
+ WHERE LOCATION = :location 
+   AND ROOM_TYPE = :roomType;]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	'location': payload.postBooking.location,
+	'roomType': payload.postBooking.roomType
+}]]]></db:input-parameters>
+		</db:update>
+		<logger level="INFO" doc:name="Logger" doc:id="2846e583-3583-4dc9-956e-6443c3a88755" message="#[payload]"/>
+		<ee:transform doc:name="Transform Message" doc:id="b06795af-4e07-4241-bcb5-5cbe9d0337de" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+{
+	hotels: 
+	{
+		success: "Booking Successful",
+		refernceID: (random() * 100000) as String {format:"0"}
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
