@@ -1,0 +1,10 @@
+http:
+  getListener:
+    host: "localhost"
+    port: "6082"
+    
+  getHotels:
+    path: "/hotels"
+  
+  hotelBooking:
+    path: "/booking/hotels"

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="cars_booking-implementationFlow" doc:id="b964a85f-b71e-460d-b08d-459572f27148" >
+		<logger level="INFO" doc:name="Logger" doc:id="84bc2cba-1343-47df-9e75-38955ea93a7d" message="flow transferred successfully"/>
+		<set-variable value="#[attributes.queryParams.source]" doc:name="source" doc:id="a009bc92-acf7-41bd-a4d7-8f90bba99633" variableName="source"/>
+		<set-variable value="#[attributes.queryParams.destination]" doc:name="destination" doc:id="5ad47c36-e215-40ba-994e-554d33513edd" variableName="destination"/>
+		<set-variable value="#[attributes.queryParams.companyName]" doc:name="company name" doc:id="2d6cffb6-d745-4e2d-aab7-e1cc669642b6" variableName="companyName"/>
+		<set-variable value="#[attributes.queryParams.carType]" doc:name="car type" doc:id="02732e02-0445-4656-ac89-d2aee3c89da9" variableName="carType"/>
+		<http:request method="POST" doc:name="Request" doc:id="099cc74c-fe4f-4267-814c-5f9ec3ef6f97" config-ref="cars_Request_configuration" path="${carsBooking.path}">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"source" : vars.source,
+	"companyName" : vars.companyName,
+	"carType" : vars.carType,
+	"destination" : vars.destination
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+</mule>

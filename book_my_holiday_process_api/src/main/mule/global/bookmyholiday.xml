@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="getHotelDetails" doc:id="6a8ccfae-c622-44a2-900c-10a9eaaafcda" >
+		<http:listener doc:name="getHotelDetails" doc:id="d135fda6-0a9f-41ed-9fc0-e778ca529a61" config-ref="HTTP_Listener_config" path="${http.getHotels.path}"/>
+		<logger level="INFO" doc:name="connectionEstablised" doc:id="dcd3abb1-6cc8-4f9b-9198-42b118d50caa" message="connection established"/>
+		<flow-ref doc:name="getHotelDetails_implementation" doc:id="cd5d884d-0f5d-4b07-a803-5e4b225f5993" name="getHotelDetails-implementationFlow"/>
+	</flow>
+	<flow name="hotel_Booking" doc:id="05705927-7192-4345-a3df-562c087ab66d" >
+		<http:listener doc:name="hotelBookingDetails" doc:id="f7b35a9e-2bc9-4fd2-8ca9-ee74b9a04e2b" config-ref="HTTP_Listener_config" path="/booking/hotels"/>
+		<logger level="INFO" doc:name="connectionEstablished" doc:id="a27f688a-8766-4d87-ac7b-840155c652b5" message="connection established"/>
+		<flow-ref doc:name="hotel_booking-implementation" doc:id="697c2d65-a435-4c49-a49c-444c33758996" name="hotel_booking-implementationFlow"/>
+	</flow>
+	<flow name="getFlightDetails" doc:id="5b699fc2-057b-4977-8b6c-eddc779d603d" >
+		<http:listener doc:name="geFlightDetails" doc:id="45f81fb0-d461-46b5-8c0c-31d58adc45e2" config-ref="HTTP_Listener_config" path="${http.getFlights.path}"/>
+		<logger level="INFO" doc:name="connectionEstablished" doc:id="4d68088b-a025-4e2f-9bbf-2fe8f0225404" message="connection established successfully"/>
+		<flow-ref doc:name="getFlightsImplementationFlow" doc:id="02e53c62-16b6-4d2f-8c0a-54b6d79ec7cc" name="getFlights-implementationFlow"/>
+	</flow>
+	<flow name="postFlightBooking" doc:id="82f5f004-28af-4dc5-89a5-aa1ef9e9d7c9" >
+		<http:listener doc:name="postFlightBooking" doc:id="9df7d097-6c39-4977-bc12-c6c678cb9cff" config-ref="HTTP_Listener_config" path="${http.postFlights.path}"/>
+		<logger level="INFO" doc:name="Logger" doc:id="19c66c44-b4a6-4ae8-9ca2-1353f11e4fc8" message="connection established successfully"/>
+		<flow-ref doc:name="Flow Reference" doc:id="a8264536-a8b9-4e80-987e-2547bc54e9e0" name="flights_booking-implementationFlow"/>
+	</flow>
+	<flow name="getCarDetails" doc:id="1b00e450-536f-435c-886a-a82240a3c22f" >
+		<http:listener doc:name="Listener" doc:id="c7612453-f642-44ae-b265-777b238817ab" config-ref="HTTP_Listener_config" path="${http.getCars.path}"/>
+		<logger level="INFO" doc:name="Logger" doc:id="c04b682c-cd8a-48fa-a975-2c62c9f9f486" message="connection established successfully"/>
+		<flow-ref doc:name="Flow Reference" doc:id="58378030-f408-4733-8423-c8f5601b2d80" name="getCars-implementationFlow"/>
+	</flow>
+	<flow name="postCarBooking" doc:id="9c3a73e5-2d1a-4fe4-87dd-1657d613a7fe" >
+		<http:listener doc:name="Listener" doc:id="89f55e1f-f275-482f-bb96-9ca80fbf3a6d" config-ref="HTTP_Listener_config" path="${http.postCars.path}"/>
+		<logger level="INFO" doc:name="Logger" doc:id="a9c7146c-eadd-4027-aed2-bb51d9a12738" message="connection established successfully"/>
+		<flow-ref doc:name="Flow Reference" doc:id="530809c1-20d1-442a-b9c6-fb84a47baa02" name="cars_booking-implementationFlow"/>
+	</flow>
+</mule>

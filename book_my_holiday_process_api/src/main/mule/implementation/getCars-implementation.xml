@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="getCars-implementationFlow" doc:id="489da598-3ddb-4401-a541-c0ee441714f5" >
+		<logger level="INFO" doc:name="Logger" doc:id="cde04c44-248e-4d41-87ee-8d402f4fb65c" message="flow transferred successfully"/>
+		<http:request method="GET" doc:name="Request" doc:id="ba40b4ea-098c-4839-bd6e-226ab1445ebb" config-ref="cars_Request_configuration" path="${carsRequest.path}"/>
+	</flow>
+</mule>

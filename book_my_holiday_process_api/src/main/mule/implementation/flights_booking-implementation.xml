@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="flights_booking-implementationFlow" doc:id="4dfd6c3a-5433-4813-a993-768fa6f9952d" >
+		<logger level="INFO" doc:name="Logger" doc:id="906c5a5a-9787-477b-a5c1-9b981e3057f1" message="flow transferred successfully"/>
+		<set-variable value="#[attributes.queryParams.source]" doc:name="source" doc:id="b317a36e-66c1-43db-ad87-2a4f048e2a15" variableName="source"/>
+		<set-variable value="#[attributes.queryParams.destination]" doc:name="destination" doc:id="af1e3ab1-42d4-4ef8-b282-04ee7532f973" variableName="destination"/>
+		<set-variable value="#[attributes.queryParams.seats]" doc:name="seats" doc:id="f7f51232-1c0a-4495-bdbe-fba66d36de75" variableName="seats"/>
+		<http:request method="POST" doc:name="Request" doc:id="0560be4a-f099-4502-b3c2-0c282ac2da83" config-ref="flights_request_configuration" path="${flightsBooking.path}">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"source" : vars.source,
+	"seats" : vars.seats,
+	"destination" : vars.destination
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+</mule>

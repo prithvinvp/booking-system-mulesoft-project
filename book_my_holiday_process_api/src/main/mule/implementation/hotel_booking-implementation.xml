@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="hotel_booking-implementationFlow" doc:id="b950d78e-c7d2-4ba9-b806-58cb17be1510" >
+		<logger level="INFO" doc:name="Logger" doc:id="1c4a7b11-7a22-4e10-8123-ff91aff519e8" message="flow transferred successfully"/>
+		<set-variable value="#[attributes.queryParams.location]" doc:name="Set Variable" doc:id="c159df20-28df-4cda-bf66-47810c2e36c2" variableName="location"/>
+		<set-variable value="#[attributes.queryParams.roomType]" doc:name="Set Variable" doc:id="0f88874f-d33b-4ac3-8d9a-d49dff76add5" variableName="roomType"/>
+		<http:request method="POST" doc:name="Request" doc:id="eaece712-5ead-4f0d-a177-0ead6b50f4d5" config-ref="hotels_request_configuration" path="${hotelsBooking.path}">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"roomType" : vars.roomType,
+	"location" : vars.location
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+</mule>

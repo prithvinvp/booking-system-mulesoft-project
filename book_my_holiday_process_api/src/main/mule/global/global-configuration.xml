@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="d27255cc-6df8-440e-8ad5-64b44e39b65a" >
+		<http:listener-connection host="${http.getListener.host}" port="${http.getListener.port}" />
+	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="69cc955d-994b-4406-bf8d-eb090c5f6a6a" file="config/${env}-config.yaml" />
+	<http:request-config name="hotels_request_configuration" doc:name="HTTP Request configuration" doc:id="85de8bb1-7064-4d6c-ad1f-2a193fd4bcba" >
+		<http:request-connection host="${hotelsRequest.host}" port="${hotelsRequest.port}" />
+	</http:request-config>
+	<http:request-config name="flights_request_configuration" doc:name="HTTP Request configuration" doc:id="ca9b8154-c829-4fa4-ac4e-f61bc1e296ef" >
+		<http:request-connection host="${flightsRequest.host}" port="${flightsRequest.port}" />
+	</http:request-config>
+	<http:request-config name="cars_Request_configuration" doc:name="HTTP Request configuration" doc:id="274bed27-de87-4ba7-9afe-d5d239988915" >
+		<http:request-connection host="${carsRequest.host}" port="${carsRequest.port}" />
+	</http:request-config>
+</mule>

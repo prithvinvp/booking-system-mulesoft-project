@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="getHotelDetails-implementationFlow" doc:id="4d9cef45-67ad-46aa-8537-f0c86f40079d" >
+		<set-variable value="#[attributes.queryParams.location]" doc:name="location" doc:id="b3c91cea-b877-41c7-878b-4c357d398fd3" variableName="location"/>
+		<http:request method="GET" doc:name="Request" doc:id="45586aac-d96a-4a1d-92f2-bec3bbe8b032" config-ref="hotels_request_configuration" path="${hotelsRequest.path}">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"location" : vars.location
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+</mule>

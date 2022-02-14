@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="getFlights-implementationFlow" doc:id="db0b073b-0319-437a-9f84-0b1a82f2c087" >
+		<logger level="INFO" doc:name="Logger" doc:id="b5e3a520-b58d-4855-9866-9c87d99ad955" message="flow transferred successfully"/>
+		<set-variable value="#[attributes.queryParams.source]" doc:name="Set Variable" doc:id="fb499b26-4117-4557-962d-b83bb8b5e924" variableName="source"/>
+		<set-variable value="#[attributes.queryParams.destination]" doc:name="Set Variable" doc:id="6e649603-af60-4c12-b43a-815f3a74380d" variableName="destinaton"/>
+		<http:request method="GET" doc:name="Request" doc:id="30f8cead-0d86-47ac-82cb-7ebc783cc766" config-ref="flights_request_configuration" path="${flightsRequest.path}">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"source" : vars.source,
+	"destination" : vars.destination
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+</mule>

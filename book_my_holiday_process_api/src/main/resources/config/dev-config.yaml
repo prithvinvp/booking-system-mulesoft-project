@@ -1,0 +1,48 @@
+http:
+  getListener:
+    host: "localhost"
+    port: "6081"
+      
+  getHotels:
+    path: "/hotels"
+    
+  getFlights:
+    path: "/flights"
+  
+  postFlights:
+    path: "/booking/flights"
+    
+  getCars:
+    path: "/cars"
+  
+  postCars:
+    path: "/booking/cars"
+  
+    
+      
+          
+hotelsRequest:
+  host: "localhost"
+  port: "7080"
+  path: "/hotels"
+  
+hotelsBooking:
+  path: "/booking/hotels"
+  
+flightsRequest:
+  host: "localhost"
+  port: "7071"
+  path: "/flights"
+  
+flightsBooking:
+  path: "/booking/flights"
+  
+carsRequest:
+  host: "localhost"
+  port: "7090"
+  path: "/cars"
+  
+carsBooking:
+  path: "/booking/cars"
+  
+  
