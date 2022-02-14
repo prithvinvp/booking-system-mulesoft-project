@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="postBooking-implementationFlow" doc:id="02fdaf6d-30d2-47a6-8b92-8c1593ea6f63" >
+		<logger level="INFO" doc:name="Logger" doc:id="fa54e2d6-2e84-4118-b1c8-4afe9d9f31b1" message="connection established and flow transferred succesfully"/>
+		<db:select doc:name="Copy_of_Select" doc:id="1cd10c1e-90e8-485f-a3e5-61d850984c3f" config-ref="Database_Config">
+			<db:sql><![CDATA[SELECT * FROM FLIGHT;]]></db:sql>
+			<db:input-parameters><![CDATA[#[{
+	'SL': attributes.queryParams.sl,
+	'DL': attributes.queryParams.dl
+}]]]></db:input-parameters>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="d3f3f4b0-a196-4853-a5f0-a85c663afd8d">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	flights: 
+	{
+		success: "Booking Successful",
+		refernceID: (random() * 100000) as String {format:"0"}
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

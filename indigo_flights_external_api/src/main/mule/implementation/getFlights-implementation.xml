@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="getFlights-implementationFlow" doc:id="e02f9012-47cf-4184-b596-68d07a0fbc97" >
+		<logger level="INFO" doc:name="Logger" doc:id="d182dd96-cd76-4eb3-91b3-335a4eef0219" message="connection established and flow transferred successfully"/>
+		<db:select doc:name="Select" doc:id="3da6fc43-19c0-4032-96df-cecaedd4abf3" config-ref="Database_Config">
+			<db:sql ><![CDATA[SELECT * FROM FLIGHT;]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	'SL': attributes.queryParams.sl,
+	'DL': attributes.queryParams.dl
+}]]]></db:input-parameters>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="843c0533-aa73-4685-a074-a5dece26a601" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="efbb7040-18db-4995-ac96-12e682f88816" message="#[payload]"/>
+	</flow>
+</mule>

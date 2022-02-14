@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="indigo_flights_external_apiFlow" doc:id="80e99a15-e0f2-4d96-9881-2a43d496366c" >
+		<http:listener doc:name="Listener" doc:id="9b40f4a1-99c2-4925-9daa-d6ebddc3f2d5" config-ref="HTTP_Listener_config" path="${http.getListener.path}"/>
+		<flow-ref doc:name="Flow Reference" doc:id="c44f9389-bc72-44e3-9d92-5db9d8d9383b" name="getFlights-implementationFlow"/>
+	</flow>
+	<flow name="indigo_flights_external_apiFlow1" doc:id="16a3aba3-44a0-4405-b147-257c7319823d" >
+		<http:listener doc:name="Listener" doc:id="6d5345cf-e733-42e4-9d2a-d92c75fad333" config-ref="HTTP_Listener_config" path="${http.postListener.path}"/>
+		<flow-ref doc:name="Flow Reference" doc:id="453e8284-cf0e-4fa9-8153-566aa0993eda" name="postBooking-implementationFlow"/>
+	</flow>
+</mule>

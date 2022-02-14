@@ -1,0 +1,17 @@
+http:
+  getListener:
+    host: "localhost"
+    port: "9072"
+    path: "/flights"
+  
+  postListener:
+    path: "/booking/flights"
+    
+
+db:
+  getFlights:
+    host: "flightsdb.cevzfi8xnzbk.ap-south-1.rds.amazonaws.com"
+    port: "3306"
+    user: "admin"
+    password: "root12345"
+    database: "FLIGHTS"
