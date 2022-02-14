@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="getFlightsFlow" doc:id="15883ff7-4564-43f4-adba-967885b9c0a1" >
+		<http:listener doc:name="Listener" doc:id="01cea582-ceae-4bf9-b513-2c5e79cd4036" config-ref="HTTP_Listener_config" path="${http.getListener.path}"/>
+		<flow-ref doc:name="Flow Reference" doc:id="a76ed39c-9ad3-4180-97c1-df65a43bb493" name="getFlights-implementationFlow"/>
+	</flow>
+	<flow name="postFlightsFlow" doc:id="d40335b7-4954-415c-9079-f1ad8d712592" >
+		<http:listener doc:name="Listener" doc:id="051a64ad-d631-49a0-a34d-62744984b0cf" config-ref="HTTP_Listener_config" path="${http.postListener.path}"/>
+		<flow-ref doc:name="Flow Reference" doc:id="13b24711-18a6-47f8-9f6c-1c51ba7aea0a" name="postFlights-implementationFlow"/>
+	</flow>
+</mule>

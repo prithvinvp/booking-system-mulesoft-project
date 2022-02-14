@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="postFlights-implementationFlow" doc:id="5cca8b88-5fac-4dd1-b9b8-508258d5057a" >
+		<logger level="INFO" doc:name="Logger" doc:id="65e83ef8-26dd-464c-8f28-e081944cc0ed" message="connection established and flow transferred succesfully"/>
+		<http:request method="POST" doc:name="Request" doc:id="fc4c609b-0225-4ffb-bd00-1a2c176ca2f0" config-ref="hotels_request_configuration" path="${request.postListener.path}"/>
+		<logger level="INFO" doc:name="Logger" doc:id="7e1ba133-04c4-4807-8418-c9242fb17a6f" message="flow ended"/>
+	</flow>
+</mule>

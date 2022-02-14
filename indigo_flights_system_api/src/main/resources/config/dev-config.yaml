@@ -1,0 +1,18 @@
+http:
+  getListener:
+    host: "localhost"
+    port: "7071"
+    path: "/flights"
+    
+  postListener:
+    path: "/booking/flights"
+    
+request:
+  getListener:
+    host: "localhost"
+    port: "9071"
+    path: "/flights"
+    
+  postListener:
+    path: "/booking/flights"
+

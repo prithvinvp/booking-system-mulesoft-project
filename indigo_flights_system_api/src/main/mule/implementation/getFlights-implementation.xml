@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="getFlights-implementationFlow" doc:id="294ec346-ec67-463c-9959-176fe08d19bd" >
+		<logger level="INFO" doc:name="Logger" doc:id="33dfce91-1280-4c6f-8e99-d673a95cb4f1" message="connection established and flow transferred successfully"/>
+		<http:request method="GET" doc:name="Request" doc:id="7bfd1ac1-5191-41bc-9da6-0021afa53204" config-ref="hotels_request_configuration" path="${request.getListener.path}">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"source" : attributes.queryParams.source,
+	"destination" : attributes.queryParams.destination
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+</mule>
