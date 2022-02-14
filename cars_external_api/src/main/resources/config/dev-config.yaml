@@ -1,0 +1,15 @@
+http:
+  getListener:
+    host: "localhost"
+    port: "9090"
+    path: "/cars"
+    
+  postListener:
+    path: "/booking/cars"
+
+s3:
+  getDetails:
+    bucket_name: "bookmycar"
+    key : "Car_Data.csv"
+    access_key : "AKIA5MLLWDGLC67J5OXJ"
+    secret_key : "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"

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="car_booking-implementationFlow" doc:id="7372a755-c86d-4e8d-97ed-e78bdc8c45e8" >
+		<logger level="INFO" doc:name="Logger" doc:id="b4c9d097-a84e-4025-b016-a461a2130c70" message="flow transferred successfully"/>
+		<ee:transform doc:name="Transform Message" doc:id="bf779b04-68c2-4e89-beb7-430e77854e8b" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	cars: 
+	{
+		success: "Booking Successful",
+		refernceID: (random() * 100000) as String {format:"0"}
+	}
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

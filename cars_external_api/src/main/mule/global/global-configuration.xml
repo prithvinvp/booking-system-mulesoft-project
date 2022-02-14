@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:s3="http://www.mulesoft.org/schema/mule/s3" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/s3 http://www.mulesoft.org/schema/mule/s3/current/mule-s3.xsd">
+	<http:listener-config name="HTTP_Listener_config1" doc:name="HTTP Listener config" doc:id="330e705b-2d8a-463a-8232-977f5cfa55b3" >
+		<http:listener-connection host="${http.getListener.host}" port="${http.getListener.port}" />
+	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="98c91c24-7b95-4300-bbe4-e7496b7b4090" file="config/${env}-config.yaml" />
+	<s3:config name="Amazon_S3_Configuration" doc:name="Amazon S3 Configuration" doc:id="3e50b85f-6aa9-435e-80f7-0c030ca59b0c" >
+		<s3:basic-connection accessKey="AKIA5MLLWDGLC67J5OXJ" secretKey="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" region="ap-south-1" />
+	</s3:config>
+</mule>

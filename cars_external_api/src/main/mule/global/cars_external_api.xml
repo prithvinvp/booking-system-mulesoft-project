@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:s3="http://www.mulesoft.org/schema/mule/s3"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/s3 http://www.mulesoft.org/schema/mule/s3/current/mule-s3.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<flow name="UpdateEvery1Hour" doc:id="cbaf7a09-ac48-4bc8-aabc-8342dd2d6e21" >
+		<scheduler doc:name="Scheduler" doc:id="6c73080b-1f5a-4856-8a1c-960fb9037084" >
+			<scheduling-strategy >
+				<fixed-frequency frequency="1" timeUnit="HOURS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<flow-ref doc:name="getCarDetails" doc:id="d8f1fb4e-05c6-4843-845c-21fb0bb9fe66" name="getCarDetails"/>
+	</flow>
+	<flow name="getCarDetails" doc:id="f3ede82d-f7cb-468d-aecd-17709b63662f" >
+		<http:listener doc:name="Listener" doc:id="df332452-0969-467f-b332-930ebaea78d4" path="${http.getListener.path}" config-ref="HTTP_Listener_config1"/>
+		<logger level="INFO" doc:name="Logger" doc:id="6daacad1-dc36-4193-9239-1e5fca1f3726" message="Initiating the connection to Amazon S3 bucket"/>
+		<flow-ref doc:name="Flow Reference" doc:id="82452c07-9cef-4e7c-98b8-842f9a382f34" name="getCarDetailsFlow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="bd52fea8-d7a9-4761-9d67-1f348a4fadb8" message='"Reading the data from Amazon S3 bucket" + #[payload]'/>
+	</flow>
+	<flow name="cars_external_apiFlow" doc:id="03ac58cb-2e8c-4eb4-bb07-45f9745fd475" >
+		<http:listener doc:name="Listener" doc:id="4bf7f52b-4250-4677-b786-8aab911d3cad" config-ref="HTTP_Listener_config1" path="${http.postListener.path}"/>
+		<logger level="INFO" doc:name="Logger" doc:id="a59b7928-9ada-4aaf-a993-a66109c60554" message="connection established"/>
+		<flow-ref doc:name="Flow Reference" doc:id="bc1d00db-1f09-40e0-809f-48b8bc848105" name="car_booking-implementationFlow"/>
+	</flow>
+</mule>
