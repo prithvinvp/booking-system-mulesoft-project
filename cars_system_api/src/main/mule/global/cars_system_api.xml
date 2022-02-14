@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="getCarDetails" doc:id="aa96a21c-9b55-4c16-84b7-c8936068e31e" >
+		<http:listener doc:name="Listener" doc:id="e86c682c-ad5c-4e2e-a37e-df97e87a3e6f" config-ref="HTTP_Listener_config" path="${http.getListener.path}"/>
+		<logger level="INFO" doc:name="Logger" doc:id="a4da2416-50e6-4560-b280-aa56070cbb15" message="connection established successfully"/>
+		<flow-ref doc:name="Flow Reference" doc:id="8eb05520-bd86-49d7-a4c5-47a5ddf58ab5" name="getCarDetails-implementationFlow"/>
+	</flow>
+	<flow name="postCarBooking" doc:id="abfe3749-5474-42f5-ae97-bc833bd0fc82" >
+		<http:listener doc:name="Listener" doc:id="09c30450-59ab-4207-83f1-18f649b128d7" config-ref="HTTP_Listener_config" path="${http.postListener.path}"/>
+		<logger level="INFO" doc:name="Logger" doc:id="d4fdf574-95af-483c-a0e4-43c52fc77345" message="connection established successfully"/>
+		<flow-ref doc:name="Flow Reference" doc:id="5ed239b4-3a02-44bb-ad2a-6f1aa4db8d39" name="cars_booking-implementationFlow"/>
+	</flow>
+</mule>

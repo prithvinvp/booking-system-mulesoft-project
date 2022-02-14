@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="cars_booking-implementationFlow" doc:id="d5ea2723-8283-4a62-9998-811869a312fb" >
+		<logger level="INFO" doc:name="Logger" doc:id="1ce1c1ae-80bc-435f-8612-56152f2a1759" />
+		<http:request method="POST" doc:name="Request" doc:id="adb908f3-5f7c-49a0-a5e4-b99eea1c4cc5" config-ref="HTTP_Request_configuration" path="${request.postListener.path}">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"source" : attributes.queryParams.source,
+	"companyName" : attributes.queryParams.companyName,
+	"destinaton" : attributes.queryParams.destination,
+	"carType" : attributes.queryParams.carType
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+</mule>

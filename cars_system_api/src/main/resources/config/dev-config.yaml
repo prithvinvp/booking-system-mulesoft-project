@@ -1,0 +1,17 @@
+http:
+  getListener:
+    host: "localhost"
+    port: "7090"
+    path: "/cars"
+    
+  postListener:
+    path: "/booking/cars"
+    
+request:
+  getListener:
+    host: "localhost"
+    port: "9090"
+    path: "/cars"
+  
+  postListener:
+    path: "/booking/cars"
